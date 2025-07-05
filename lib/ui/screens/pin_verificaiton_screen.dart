@@ -1,19 +1,20 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:task_management/ui/screens/forgot_password_email_screen.dart';
 import 'package:task_management/ui/screens/sign_up_screen.dart';
 import 'package:task_management/ui/widgets/screen_background.dart';
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({super.key});
-  static const String name = '/sign-in';
+
+class Pin_Verification_Screen extends StatefulWidget {
+  const Pin_Verification_Screen({super.key});
+  static const String name = '/pin-verificaition-screen';
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  State<Pin_Verification_Screen> createState() =>
+      _Pin_Verification_ScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _Pin_Verification_ScreenState extends State<Pin_Verification_Screen> {
   final TextEditingController emailTEController = TextEditingController();
   final TextEditingController passwordTEController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -33,46 +34,28 @@ class _SignInScreenState extends State<SignInScreen> {
                 const SizedBox(
                   height: 80,
                 ),
-                Text('Get Started With',
+                Text('PIN Verification',
                     style: Theme.of(context).textTheme.titleLarge),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  'A 6 digits OTP has been send to your email address',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleSmall
+                      ?.copyWith(
+                      color: Colors.grey),
+                ),
                 const SizedBox(
                   height: 24,
                 ),
-                TextFormField(
-                    controller: emailTEController,
-                    textInputAction: TextInputAction.next,
-                    decoration: InputDecoration(
-                      hintText: 'Email',
-                    ),
-                  validator: (String? value){
-                      String email = value?? '';
-                   if(EmailValidator.validate(email)==false)
-                     {
-                       return 'Enter a valid email';
-                     }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                TextFormField(
-                  controller: passwordTEController,
-                  obscureText: true,
-                  decoration: InputDecoration(hintText: 'Password'),
-                  validator: (String? value){
-                    if((value?.length ?? 0)<=6)
-                    {
-                      return 'Enter a valid password';
-                    }
-                    return null;
-                  },
-                ),
+
                 const SizedBox(
                   height: 16,
                 ),
                 ElevatedButton(
-                    onPressed: onTapSignIn_button,
+                    onPressed: (){},
                     child: Icon(Icons.arrow_circle_right_outlined)),
                 const SizedBox(
                   height: 40,
@@ -80,17 +63,9 @@ class _SignInScreenState extends State<SignInScreen> {
                 Center(
                   child: Column(
                     children: [
-                      TextButton(
-                          onPressed: onTap_ForgotPassword,
-                          child: Text(
-                            'Forgot Password?',
-                            style: TextStyle(
-                              color: Colors.grey,
-                            ),
-                          )),
                       RichText(
                           text: TextSpan(
-                              text: "Don't have an account? ",
+                              text: "Have account? ",
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 color: Colors.black,
@@ -98,7 +73,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               ),
                               children: [
                             TextSpan(
-                              text: 'Sign Up',
+                              text: 'Sign In',
                               style: TextStyle(
                                 color: Colors.green,
                                 fontWeight: FontWeight.w700,
@@ -119,22 +94,19 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   void onTapSignIn_button() {
-    if(_formKey.currentState!.validate()){
+    if (_formKey.currentState!.validate()) {
       //TODO: Sign in with API
     }
   }
-  void onTap_ForgotPassword() {
-    Navigator.pushReplacementNamed(context, Forgot_passwordEmail_screen.name);
-  }
+
+  void onTap_ForgotPassword() {}
 
   void onTapSignUp_button() {
-    Navigator.pushReplacementNamed(
-        context, SignUpScreen.name
-    );
+    Navigator.pushReplacementNamed(context, SignUpScreen.name);
   }
 
   @override
-  void dispose(){
+  void dispose() {
     emailTEController.dispose();
     passwordTEController.dispose();
     super.dispose();
