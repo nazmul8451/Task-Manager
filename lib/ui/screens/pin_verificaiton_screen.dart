@@ -1,6 +1,9 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:task_management/ui/screens/change_password_screen.dart';
+import 'package:task_management/ui/screens/sign_in_screen.dart';
 import 'package:task_management/ui/screens/sign_up_screen.dart';
 import 'package:task_management/ui/widgets/screen_background.dart';
 
@@ -15,7 +18,7 @@ class Pin_Verification_Screen extends StatefulWidget {
 }
 
 class _Pin_Verification_ScreenState extends State<Pin_Verification_Screen> {
-  final TextEditingController emailTEController = TextEditingController();
+  final TextEditingController OtpTEController = TextEditingController();
   final TextEditingController passwordTEController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
@@ -50,13 +53,34 @@ class _Pin_Verification_ScreenState extends State<Pin_Verification_Screen> {
                 const SizedBox(
                   height: 24,
                 ),
+                //otp pin submitted filled
+                PinCodeTextField(
+                  length: 6,
+                  animationType: AnimationType.fade,
+                  keyboardType: TextInputType.number,
+                  pinTheme: PinTheme(
+                      shape: PinCodeFieldShape.box,
+                      borderRadius: BorderRadius.circular(5),
+                      fieldHeight: 50,
+                      fieldWidth: 40,
+                      activeFillColor: Colors.white,
+                      selectedColor: Colors.green,
+                      inactiveColor: Colors.grey
+                  ),
+                  animationDuration: Duration(milliseconds: 300),
+                  backgroundColor: Colors.transparent,
+                  controller: OtpTEController,
+                  appContext: context,
+                ),
+
+                //-----
 
                 const SizedBox(
                   height: 16,
                 ),
                 ElevatedButton(
-                    onPressed: (){},
-                    child: Icon(Icons.arrow_circle_right_outlined)),
+                    onPressed: onTapSubmitButton,
+                    child: Text('Verify')),
                 const SizedBox(
                   height: 40,
                 ),
@@ -79,7 +103,7 @@ class _Pin_Verification_ScreenState extends State<Pin_Verification_Screen> {
                                 fontWeight: FontWeight.w700,
                               ),
                               recognizer: TapGestureRecognizer()
-                                ..onTap = onTapSignUp_button,
+                                ..onTap = onTapSignIn_button,
                             )
                           ])),
                     ],
@@ -94,20 +118,18 @@ class _Pin_Verification_ScreenState extends State<Pin_Verification_Screen> {
   }
 
   void onTapSignIn_button() {
-    if (_formKey.currentState!.validate()) {
-      //TODO: Sign in with API
-    }
+    Navigator.pushNamedAndRemoveUntil(context, SignInScreen.name, (predicate)=>false);
   }
 
-  void onTap_ForgotPassword() {}
+void onTapSubmitButton()
+{
+  Navigator.pushNamed(context, ChangePasswordScreen.name);
+}
 
-  void onTapSignUp_button() {
-    Navigator.pushReplacementNamed(context, SignUpScreen.name);
-  }
 
   @override
   void dispose() {
-    emailTEController.dispose();
+    OtpTEController.dispose();
     passwordTEController.dispose();
     super.dispose();
   }

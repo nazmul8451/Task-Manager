@@ -2,6 +2,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:task_management/ui/screens/change_password_screen.dart';
+import 'package:task_management/ui/screens/pin_verificaiton_screen.dart';
 import 'package:task_management/ui/screens/sign_up_screen.dart';
 import 'package:task_management/ui/widgets/screen_background.dart';
 
@@ -107,14 +108,13 @@ class _Forgot_passwordEmail_screenState
   }
 
   void onTapSignIn_button() {
-    if (_formKey.currentState!.validate()) {
-      //TODO: Sign in with API
-    }
+    Navigator.pop(context);
   }
 
   void onTap_Submit_Button()
   {
-    Navigator.pushNamed(context, ChangePasswordScreen.name);
+    Navigator.pushNamed(
+        context, Pin_Verification_Screen.name);
   }
 
   void onTap_ForgotPassword() {}
