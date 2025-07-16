@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:task_management/ui/screens/Add_New_Task.dart';
+import 'package:task_management/ui/screens/Update_profile_screen.dart';
 import 'package:task_management/ui/screens/change_password_screen.dart';
 import 'package:task_management/ui/screens/forgot_password_email_screen.dart';
 import 'package:task_management/ui/screens/main_nav_bar_screen.dart';
@@ -13,8 +15,8 @@ import 'package:task_management/ui/screens/splash_screen.dart';
 
 //All Package imported
 
-
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     DevicePreview(
       enabled: !kReleaseMode,
@@ -28,7 +30,6 @@ void main() {
             ),
           ),
           inputDecorationTheme: InputDecorationTheme(
-
                 filled: true,
                 fillColor: Colors.white,
                 contentPadding:
@@ -74,6 +75,8 @@ void main() {
           ChangePasswordScreen.name : (context) => ChangePasswordScreen(),
           Pin_Verification_Screen.name : (context) => Pin_Verification_Screen(),
           MainNavBarScreen.name: (context) => MainNavBarScreen(),
+          AddNewTask.name : (context) => AddNewTask(),
+          UpdateProfileScreen.name : (context) => UpdateProfileScreen(),
         }
       ), // runApp এর ভিতরে DevicePreview
     ),

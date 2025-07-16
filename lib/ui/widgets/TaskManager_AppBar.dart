@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_management/ui/screens/Update_profile_screen.dart';
 import 'package:task_management/ui/screens/sign_in_screen.dart';
 class Task_manager_AppBar extends StatefulWidget implements PreferredSizeWidget {
 
@@ -19,30 +20,33 @@ class _Task_manager_AppBarState extends State<Task_manager_AppBar> {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.green,
-      title: Row(
-        children: [
-          CircleAvatar(
-          ),
-          const SizedBox(width: 16,),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Rimon islam",style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white
-                ),),
-                Text('Rimon1234@gmail.com',style: TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white
-                ),),
-              ],
+      title: GestureDetector(
+        onTap: _onTapProfile_screen,
+        child: Row(
+          children: [
+            CircleAvatar(
             ),
-          ),
-      IconButton(onPressed: _onTapLogOutButton, icon: Icon(Icons.logout)),
-        ],
+            const SizedBox(width: 16,),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Rimon islam",style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white
+                  ),),
+                  Text('Rimon1234@gmail.com',style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white
+                  ),),
+                ],
+              ),
+            ),
+        IconButton(onPressed: _onTapLogOutButton, icon: Icon(Icons.logout)),
+          ],
+        ),
       ),
     );
   }
@@ -51,6 +55,17 @@ class _Task_manager_AppBarState extends State<Task_manager_AppBar> {
   {
     Navigator.pushNamedAndRemoveUntil(context, SignInScreen.name, (predicate)=> false);
   }
+
+
+  void _onTapProfile_screen()
+  {
+    if(ModalRoute.of(context)!.settings.name != UpdateProfileScreen.name)
+      {
+        Navigator.pushNamed(context, UpdateProfileScreen.name);
+      }
+
+  }
+
 
 
 }

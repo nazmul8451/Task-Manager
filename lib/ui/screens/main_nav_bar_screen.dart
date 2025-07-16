@@ -47,10 +47,12 @@ class _MainNavBarScreenState extends State<MainNavBarScreen> {
             icon: Icon(Icons.done_all_outlined), label: 'Completed'),
         NavigationDestination(
             icon: Icon(Icons.cancel_outlined), label: 'Cancelled'),
-
-
       ]),
     );
   }
+
+
+
+
 }
 
