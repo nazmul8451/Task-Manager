@@ -15,16 +15,16 @@ class UpdateProfileScreen extends StatefulWidget {
   State<UpdateProfileScreen> createState() => _UpdateProfileScreenState();
 }
 
-final TextEditingController emailTEController = TextEditingController();
-final TextEditingController passwordTEController = TextEditingController();
-final TextEditingController firstNamelTEController = TextEditingController();
-final TextEditingController lastNameTEController = TextEditingController();
-final TextEditingController mobileTEController = TextEditingController();
-GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-final ImagePicker _imagePicker = ImagePicker();
-XFile? _selectedImage;
-
 class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
+  final TextEditingController emailTEController = TextEditingController();
+  final TextEditingController passwordTEController = TextEditingController();
+  final TextEditingController firstNamelTEController = TextEditingController();
+  final TextEditingController lastNameTEController = TextEditingController();
+  final TextEditingController mobileTEController = TextEditingController();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final ImagePicker _imagePicker = ImagePicker();
+  XFile? _selectedImage;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
