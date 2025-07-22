@@ -194,11 +194,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     if(response.isSuccess)
       {
+        _clearTextField();
         Show_SnacBarMessage(context,'Registration has been success.plz log in');
       }else
         {
           Show_SnacBarMessage(context,response.errormessage!);
         }
+  }
+
+
+  void _clearTextField(){
+    firstNamelTEController.clear();
+    lastNameTEController.clear();
+    mobileTEController.clear();
+    emailTEController.clear();
+    passwordTEController.clear();
   }
 
   @override
