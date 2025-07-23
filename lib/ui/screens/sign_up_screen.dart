@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:task_management/data/service/network_caller.dart';
 import 'package:task_management/data/urls.dart';
 import 'package:task_management/ui/screens/sign_in_screen.dart';
+import 'package:task_management/ui/widgets/center_circulerProgressbar.dart';
 import 'package:task_management/ui/widgets/screen_background.dart';
 import 'package:task_management/ui/widgets/snacbar_messanger.dart';
 
@@ -123,7 +124,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 Visibility(
                   visible: _signUpIn_Progress == false,
-                  replacement: Center(child: CircularProgressIndicator()),
+                  replacement: CenterCirculerprogressbar(),
                   child: ElevatedButton(
                       onPressed: _onTapSignUp_button,
                       child: Icon(Icons.arrow_circle_right_outlined)),

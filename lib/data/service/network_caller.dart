@@ -7,7 +7,7 @@ class NetworkResponse {
   final bool isSuccess;
   final int statusCode;
   final Map<String,dynamic>? body;
-  final String ? errormessage;
+  final String ? errormessage ;
 //create  a constructor
   NetworkResponse(
   {
