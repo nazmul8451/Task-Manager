@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:task_management/data/models/users_model.dart';
 import 'package:task_management/data/service/network_caller.dart';
 import 'package:task_management/data/urls.dart';
 import 'package:task_management/ui/screens/forgot_password_email_screen.dart';
@@ -146,6 +147,9 @@ class _SignInScreenState extends State<SignInScreen> {
     NetworkResponse response = await NetworkCaller.postRequest(url: Urls.LogInUrl,body: requestBody);
     if(response.isSuccess)
       {
+        UserModel userModel = UserModel.fromJson(response.body!['data']);
+        String token = response.body!['token'];
+        
         Navigator.pushNamedAndRemoveUntil(
             context,
             MainNavBarScreen.name, (predicate)=> false);
