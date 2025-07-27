@@ -177,8 +177,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Future<void> _signUp() async{
     _signUpIn_Progress = true;
     setState(() {});
-    Map<String,String>requestBody=
-    {
+    Map<String,String>requestBody= {
         "email":emailTEController.text.trim(),
         "firstName":firstNamelTEController.text.trim(),
         "lastName":lastNameTEController.text.trim(),

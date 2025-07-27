@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:task_management/data/models/users_model.dart';
 import 'package:task_management/data/service/network_caller.dart';
 import 'package:task_management/data/urls.dart';
+import 'package:task_management/ui/controller/auth_controller.dart';
 import 'package:task_management/ui/screens/forgot_password_email_screen.dart';
 import 'package:task_management/ui/screens/main_nav_bar_screen.dart';
 import 'package:task_management/ui/screens/sign_up_screen.dart';
@@ -144,12 +145,14 @@ class _SignInScreenState extends State<SignInScreen> {
       "email":emailTEController.text.trim(),
       "password":passwordTEController.text,
     };
-    NetworkResponse response = await NetworkCaller.postRequest(url: Urls.LogInUrl,body: requestBody);
-    if(response.isSuccess)
+    NetworkResponse response = await NetworkCaller.postRequest(url: Urls.LogInUrl,body: requestBody, );
+    if(response.isSuccess && response.body?['data'] != null)
       {
         UserModel userModel = UserModel.fromJson(response.body!['data']);
         String token = response.body!['token'];
-        
+
+        await AuthController.saveUserData(userModel, token);
+
         Navigator.pushNamedAndRemoveUntil(
             context,
             MainNavBarScreen.name, (predicate)=> false);

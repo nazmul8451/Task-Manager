@@ -5,29 +5,30 @@ import 'package:flutter/material.dart';
 class UserModel{
   late String id;
   late String email;
-  late String fristName;
+  late String firstName;
   late String lastName;
   late String mobile;
   String ? photo;
 
   String get fullName {
-    return '$fristName $lastName';
+    return '$firstName $lastName';
   }
 
   UserModel(
   {
     required this.id,
     required this.email,
-    required this.fristName,
+    required this.firstName,
     required this.lastName,
     required this.mobile,
     this.photo,
-}
+  }
     );
 
   UserModel.fromJson(Map<String,dynamic> jsonData ){
-    id = jsonData['id'];
-    fristName = jsonData['frisName'];
+    id = jsonData['_id'];
+    email = jsonData['email'];
+    firstName = jsonData['firstName'];
     lastName = jsonData['lastName'];
     mobile = jsonData['mobile'];
     photo = jsonData['photo'];
@@ -37,7 +38,8 @@ class UserModel{
   {
     return{
       'id' : id,
-      'fristName' : fristName,
+      'email' : email,
+      'firstName' : firstName,
       'lastName' : lastName,
       'mobile' : mobile,
       'photo' : photo,

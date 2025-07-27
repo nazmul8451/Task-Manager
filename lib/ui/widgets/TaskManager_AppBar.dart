@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_management/ui/controller/auth_controller.dart';
 import 'package:task_management/ui/screens/Update_profile_screen.dart';
 import 'package:task_management/ui/screens/sign_in_screen.dart';
 class Task_manager_AppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -31,12 +32,14 @@ class _Task_manager_AppBarState extends State<Task_manager_AppBar> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Rimon islam",style: TextStyle(
+                  Text(
+                    AuthController.userModel!.fullName,
+                    style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                       color: Colors.white
                   ),),
-                  Text('Rimon1234@gmail.com',style: TextStyle(
+                  Text(AuthController.userModel!.email,style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w500,
                       color: Colors.white
@@ -51,8 +54,9 @@ class _Task_manager_AppBarState extends State<Task_manager_AppBar> {
     );
   }
 
-  void _onTapLogOutButton()
-  {
+  Future<void> _onTapLogOutButton()
+  async {
+    await AuthController.clearData();
     Navigator.pushNamedAndRemoveUntil(context, SignInScreen.name, (predicate)=> false);
   }
 

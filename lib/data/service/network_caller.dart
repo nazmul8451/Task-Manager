@@ -32,6 +32,7 @@ class NetworkCaller{
         return NetworkResponse(
           isSuccess: true,
             statusCode: response.statusCode,
+          body: decodedJson,
             );
       }
       else {
@@ -51,7 +52,7 @@ class NetworkCaller{
       );
     }
   }
-  static Future<NetworkResponse> postRequest ({required String url,Map<String,String>? body}) async{
+  static Future<NetworkResponse> postRequest ({required String url,Map<String,String>? body,bool isFromLogin = false}) async{
     try {
       Uri uri = Uri.parse(url);
       logRequest(url, body);
@@ -67,7 +68,10 @@ class NetworkCaller{
         final decodedJson = jsonDecode(response.body);
         return NetworkResponse(
             statusCode: response.statusCode,
-            isSuccess: true);
+            isSuccess: true,
+          body: decodedJson,
+
+        );
       } else {
         final decodedJson = jsonDecode(response.body);
         return NetworkResponse(
