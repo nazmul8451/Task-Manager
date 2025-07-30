@@ -10,6 +10,7 @@ void main() {
       builder: (context) => const MaterialApp(
         useInheritedMediaQuery: true,
         debugShowCheckedModeBanner: false,
+
         home:TaskManager() ,
       ), // runApp এর ভিতরে DevicePreview
     ),

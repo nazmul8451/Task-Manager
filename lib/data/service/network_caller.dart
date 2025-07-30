@@ -98,7 +98,9 @@ class NetworkCaller {
         );
       }
       else if(response.statusCode == 200){
-        _onUnAuthorize();
+        if(isFromLogin == false) {
+          _onUnAuthorize();
+        }
         final decodedJson = jsonDecode(response.body);
         return NetworkResponse(
           statusCode: response.statusCode,

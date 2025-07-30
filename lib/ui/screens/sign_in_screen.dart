@@ -47,17 +47,16 @@ class _SignInScreenState extends State<SignInScreen> {
                   height: 24,
                 ),
                 TextFormField(
-                    controller: emailTEController,
-                    textInputAction: TextInputAction.next,
-                    decoration: InputDecoration(
-                      hintText: 'Email',
-                    ),
-                  validator: (String? value){
-                      String email = value?? '';
-                   if(EmailValidator.validate(email)==false)
-                     {
-                       return 'Enter a valid email';
-                     }
+                  controller: emailTEController,
+                  textInputAction: TextInputAction.next,
+                  decoration: InputDecoration(
+                    hintText: 'Email',
+                  ),
+                  validator: (String? value) {
+                    String email = value ?? '';
+                    if (EmailValidator.validate(email) == false) {
+                      return 'Enter a valid email';
+                    }
                     return null;
                   },
                 ),
@@ -68,9 +67,8 @@ class _SignInScreenState extends State<SignInScreen> {
                   controller: passwordTEController,
                   obscureText: true,
                   decoration: InputDecoration(hintText: 'Password'),
-                  validator: (String? value){
-                    if((value?.length ?? 0)<=6)
-                    {
+                  validator: (String? value) {
+                    if ((value?.length ?? 0) <= 6) {
                       return 'Enter a valid password';
                     }
                     return null;
@@ -80,7 +78,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   height: 16,
                 ),
                 Visibility(
-                  visible:_signInProgress == false ,
+                  visible: _signInProgress == false,
                   replacement: CenterCirculerprogressbar(),
                   child: ElevatedButton(
                       onPressed: onTapSignIn_button,
@@ -131,60 +129,50 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   void onTapSignIn_button() {
-    if(_formKey.currentState!.validate()){
+    if (_formKey.currentState!.validate()) {
       //TODO: Sign in with API
       _SignIn();
     }
   }
+
   //API calling for Sign In
-  Future <void> _SignIn() async {
+  Future<void> _SignIn() async {
     _signInProgress = true;
     setState(() {});
-    Map<String,String> requestBody =
-    {
-      "email":emailTEController.text.trim(),
-      "password":passwordTEController.text,
+    Map<String, String> requestBody = {
+      "email": emailTEController.text.trim(),
+      "password": passwordTEController.text,
     };
-    NetworkResponse response = await NetworkCaller.postRequest(url: Urls.LogInUrl,body: requestBody, );
-    if(response.isSuccess && response.body?['data'] != null)
-      {
-        UserModel userModel = UserModel.fromJson(response.body!['data']);
-        String token = response.body!['token'];
+    NetworkResponse response = await NetworkCaller.postRequest(
+      url: Urls.LogInUrl,
+      body: requestBody,
+      isFromLogin: true
+    );
+    if (response.isSuccess && response.body?['data'] != null) {
+      UserModel userModel = UserModel.fromJson(response.body!['data']);
+      String token = response.body!['token'];
 
-        await AuthController.saveUserData(userModel, token);
+      await AuthController.saveUserData(userModel, token);
 
-        Navigator.pushNamedAndRemoveUntil(
-            context,
-            MainNavBarScreen.name, (predicate)=> false);
-      }
-    else
-      {
-        _signInProgress = false;
-        setState(() {});
-        Show_SnacBarMessage(context, response.errormessage!);
-      }
-
+      Navigator.pushNamedAndRemoveUntil(
+          context, MainNavBarScreen.name, (predicate) => false);
+    } else {
+      _signInProgress = false;
+      setState(() {});
+      Show_SnacBarMessage(context, response.errormessage!);
+    }
   }
 
-
-
-
   void onTap_ForgotPassword() {
-    Navigator.pushReplacementNamed(
-        context,
-        Forgot_passwordEmail_screen.name);
+    Navigator.pushReplacementNamed(context, Forgot_passwordEmail_screen.name);
   }
 
   void onTapSignUp_button() {
-    Navigator.pushReplacementNamed(
-        context, SignUpScreen.name
-    );
+    Navigator.pushReplacementNamed(context, SignUpScreen.name);
   }
 
-
-
   @override
-  void dispose(){
+  void dispose() {
     emailTEController.dispose();
     passwordTEController.dispose();
     super.dispose();
