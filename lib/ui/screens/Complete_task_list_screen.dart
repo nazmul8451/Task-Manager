@@ -17,7 +17,7 @@ class _Complete_TaskListScreenState extends State<Complete_TaskListScreen> {
       child: ListView.builder(
           itemCount: 10,
           itemBuilder: (contex,index){
-            return Task_Card(taskType: TaskType.completed,);
+            // return Task_Card(taskType: TaskType.completed,);
           }),
     );
   }

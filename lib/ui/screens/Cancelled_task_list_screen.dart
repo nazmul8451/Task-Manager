@@ -17,9 +17,7 @@ class _Cancelled_TaskListScreenState extends State<Cancelled_TaskListScreen> {
       child: ListView.builder(
           itemCount: 10,
           itemBuilder: (contex,index){
-            return Task_Card(
-              taskType: TaskType.cancelled,
-            );
+            // return Task_Card(taskType: TaskType.cancelled,);
           }),
     );
   }

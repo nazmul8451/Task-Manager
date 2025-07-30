@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../data/models/task_model.dart';
+
 enum TaskType {
   tNew,
   progress,
@@ -11,8 +13,10 @@ class Task_Card extends StatelessWidget {
   const Task_Card({
     super.key,
     required this.taskType,
+    required this.taskModel,
   });
   final TaskType taskType;
+  final TaskModel taskModel;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -26,14 +30,14 @@ class Task_Card extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Title will be here',
+              taskModel.title,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             Text(
-              'Description',
+              taskModel.description,
               style: TextStyle(color: Colors.black54),
             ),
-            Text('Date: 12/2/25'),
+            Text('Date: ${taskModel.createdDate}'),
             const SizedBox(
               height: 8,
             ),
@@ -41,7 +45,7 @@ class Task_Card extends StatelessWidget {
               children: [
                 Chip(
                   label: Text(
-                    'New',
+                    taskModel.status,
                     style: TextStyle(color: Colors.white),
                   ),
                   backgroundColor: _getTaskChipColor(),
@@ -70,7 +74,7 @@ class Task_Card extends StatelessWidget {
       ),
     );
   }
-
+//--
   Color _getTaskChipColor() {
     if (taskType == TaskType.tNew) {
       return Colors.blue;
@@ -82,4 +86,7 @@ class Task_Card extends StatelessWidget {
       return Colors.red;
     }
   }
+  //---
+
+
 }
