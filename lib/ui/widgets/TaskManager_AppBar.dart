@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_management/data/models/users_model.dart';
 import 'package:task_management/ui/controller/auth_controller.dart';
 import 'package:task_management/ui/screens/Update_profile_screen.dart';
 import 'package:task_management/ui/screens/sign_in_screen.dart';
@@ -19,6 +20,7 @@ class Task_manager_AppBar extends StatefulWidget implements PreferredSizeWidget 
 class _Task_manager_AppBarState extends State<Task_manager_AppBar> {
   @override
   Widget build(BuildContext context) {
+    final user = AuthController.userModel;
     return AppBar(
       backgroundColor: Colors.green,
       title: GestureDetector(
@@ -28,25 +30,36 @@ class _Task_manager_AppBarState extends State<Task_manager_AppBar> {
             CircleAvatar(
             ),
             const SizedBox(width: 16,),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    AuthController.userModel!.fullName,
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white
-                  ),),
-                  Text(AuthController.userModel!.email,style: TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white
-                  ),),
-                ],
+            if(user!=null)...[
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      user.fullName,
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white
+                      ),),
+                    Text(
+                      user.email,
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white
+                    ),),
+                  ],
+                ),
               ),
-            ),
+            ]else...[
+              const Expanded(
+                  child:Text(
+                'Loading...',
+                style: TextStyle(
+                  fontSize: 16,
+                    color: Colors.white),))
+            ],
         IconButton(onPressed: _onTapLogOutButton, icon: Icon(Icons.logout)),
           ],
         ),
