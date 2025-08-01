@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_management/data/models/task_model.dart';
+import 'package:task_management/data/models/task_status_count.dart';
 import 'package:task_management/data/service/network_caller.dart';
 import 'package:task_management/data/urls.dart';
 import 'package:task_management/ui/screens/Add_New_Task.dart';
@@ -19,14 +20,20 @@ class NewTaskListScreen extends StatefulWidget {
 }
 
 class _NewTaskListScreenState extends State<NewTaskListScreen> {
+
   bool _getNewTaskInProgress = false;
+  bool _getTaskStatusCountInProgress = false;
   List <TaskModel> _newTaskList= [];
+  List<TaskStatusCountModel> _taskStatusCountList= [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _getNewTaskList();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      _getNewTaskList();
+      _getNewTaskStatusList();
+    });
   }
 
   @override
@@ -41,22 +48,27 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
             ),
             SizedBox(
               height: 100,
-              width: double.infinity,
-              child: ListView.separated(
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                scrollDirection: Axis.horizontal,
-                separatorBuilder: (context, index) => const SizedBox(
-                  width: 4,
+              child: Visibility(
+                visible: _getTaskStatusCountInProgress == false,
+                replacement: CenterCirculerprogressbar(),
+                child: ListView.separated(
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: _taskStatusCountList.length,
+                  itemBuilder: (context, index) {
+                    return Task_count_summuryCard(
+                        title: _taskStatusCountList[index].id,
+                        count: _taskStatusCountList[index].count);
+                  },
+                  separatorBuilder: (context, index) => const SizedBox(
+                    width: 4,
+                  ),
                 ),
-                itemCount: 4,
-                itemBuilder: (context, index) {
-                  return Task_count_summuryCard(title: 'Progress', count: 8);
-                },
               ),
             ),
             Visibility(
-              visible: _getNewTaskInProgress == false,
-              replacement: CenterCirculerprogressbar(),
+
+
               child: Expanded(
                   child: ListView.builder(
                       itemCount: _newTaskList.length,
@@ -98,6 +110,32 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
     }
     _getNewTaskInProgress =false;
     setState(() {});
+  }
+  Future<void> _getNewTaskStatusList() async {
+    _getTaskStatusCountInProgress = true;
+    setState(() {});
+    NetworkResponse response =
+    await NetworkCaller.getRequest(url: Urls.getTaskStatusCountUrl);
+
+    if(response.isSuccess){
+      //Models
+      List<TaskStatusCountModel> list = [];
+      for(Map<String,dynamic>jsonData in response.body!['data'])
+      {
+        list.add(TaskStatusCountModel.fromJson(jsonData));
+      }
+      _taskStatusCountList = list;
+    }else{
+      if(mounted)
+        {
+          Show_SnacBarMessage(context, response.errormessage!);
+
+        }
+    }
+    _getTaskStatusCountInProgress =false;
+    if(mounted){
+      setState(() {});
+    }
   }
 
   void _onTapNewTaskButton() {

@@ -22,7 +22,9 @@ class _ProgressTaskListScreenState extends State<ProgressTaskListScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _getProgressTaskList();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      _getProgressTaskList();
+    });
   }
   @override
   Widget build(BuildContext context) {
