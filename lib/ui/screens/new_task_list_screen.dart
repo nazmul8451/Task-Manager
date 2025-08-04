@@ -76,6 +76,10 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
                         return Task_Card(
                           taskModel: _newTaskList[index],
                           taskType: TaskType.tNew,
+                          onStatusUpdate: () {
+                            _getNewTaskList();
+                            _getNewTaskStatusList();
+                            },
                         );
                       })),
             )

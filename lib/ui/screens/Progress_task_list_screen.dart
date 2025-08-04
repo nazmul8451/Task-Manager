@@ -37,7 +37,10 @@ class _ProgressTaskListScreenState extends State<ProgressTaskListScreen> {
           itemBuilder: (contex,index){
             return Task_Card(
               taskType: TaskType.progress,
-              taskModel: _progressTaskList[index],);
+              taskModel: _progressTaskList[index],
+              onStatusUpdate: () {
+                _getProgressTaskList();
+              },);
           }),
     ),
     );

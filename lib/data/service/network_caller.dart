@@ -35,7 +35,7 @@ class NetworkCaller {
       final Map<String, String> headers = {
         'token': AuthController.accessToken ?? '',
       };
-      logRequest;(url, null, null,headers);
+      _logRequest;(url, null, null,headers);
       Response response = await get(uri,headers: headers);
       logResponse(url, response);
       if (response.statusCode == 200) {
@@ -82,9 +82,7 @@ class NetworkCaller {
             'content-type': 'application/json',
             'token': AuthController.accessToken ?? '',
           },
-          logRequest;
-      (url, body, headers);
-
+          _logRequest;(url, body, headers);
       Response response = await post(
         uri,
         headers: headers,
@@ -128,7 +126,7 @@ class NetworkCaller {
     }
   }
 
-  static void logRequest(
+  static void _logRequest(
       String url, Map<String, String>? body, Map<String, String>? headers) {
     debugPrint('=====================Request========================\n'
         'URL: $url \n'

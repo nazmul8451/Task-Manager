@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:task_management/data/service/network_caller.dart';
+import 'package:task_management/data/urls.dart';
+import 'package:task_management/ui/widgets/center_circulerProgressbar.dart';
+import 'package:task_management/ui/widgets/snacbar_messanger.dart';
 
 import '../../data/models/task_model.dart';
 
@@ -9,14 +13,23 @@ enum TaskType {
   cancelled,
 }
 
-class Task_Card extends StatelessWidget {
+class Task_Card extends StatefulWidget {
   const Task_Card({
     super.key,
     required this.taskType,
     required this.taskModel,
+    required this.onStatusUpdate,
   });
   final TaskType taskType;
   final TaskModel taskModel;
+  final VoidCallback onStatusUpdate;
+
+  @override
+  State<Task_Card> createState() => _Task_CardState();
+}
+
+class _Task_CardState extends State<Task_Card> {
+  bool _updateTaskStatsuInProgress = false;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -30,14 +43,14 @@ class Task_Card extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              taskModel.title,
+              widget.taskModel.title,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             Text(
-              taskModel.description,
+              widget.taskModel.description,
               style: TextStyle(color: Colors.black54),
             ),
-            Text('Date: ${taskModel.createdDate}'),
+            Text('Date: ${widget.taskModel.createdDate}'),
             const SizedBox(
               height: 8,
             ),
@@ -45,7 +58,7 @@ class Task_Card extends StatelessWidget {
               children: [
                 Chip(
                   label: Text(
-                    taskModel.status,
+                    widget.taskModel.status,
                     style: TextStyle(color: Colors.white),
                   ),
                   backgroundColor: _getTaskChipColor(),
@@ -55,12 +68,18 @@ class Task_Card extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20)),
                 ),
                 Spacer(),
-                IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.edit,
-                      color: Colors.green,
-                    )),
+                Visibility(
+                  visible: _updateTaskStatsuInProgress == false,
+                  replacement: CenterCirculerprogressbar(),
+                  child: IconButton(
+                      onPressed: () {
+                        _showEditTaskStatusDialog();
+                      },
+                      icon: Icon(
+                        Icons.edit,
+                        color: Colors.green,
+                      )),
+                ),
                 IconButton(
                     onPressed: () {},
                     icon: Icon(
@@ -74,19 +93,111 @@ class Task_Card extends StatelessWidget {
       ),
     );
   }
+
 //--
   Color _getTaskChipColor() {
-    if (taskType == TaskType.tNew) {
+    if (widget.taskType == TaskType.tNew) {
       return Colors.blue;
-    } else if (taskType == TaskType.progress) {
+    } else if (widget.taskType == TaskType.progress) {
       return Colors.purple;
-    } else if (taskType == TaskType.completed) {
+    } else if (widget.taskType == TaskType.completed) {
       return Colors.green;
     } else {
       return Colors.red;
     }
   }
-  //---
 
+  void _showEditTaskStatusDialog()
+  {
+    showDialog(context: context, builder: (ctx){
+      return AlertDialog(
+        title:Text('Change Status'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              title: Text('New'),
+              trailing:_getTaskStatusTrailling(TaskType.tNew) ,
+              onTap: (){
+                if(widget.taskType == TaskType.tNew){
+                  return;
+                }else{
+                _updateTaskStatus('New');
+                }
+
+              },
+            ),
+            ListTile(
+              title: Text('In Progress'),
+              trailing:_getTaskStatusTrailling(TaskType.progress) ,
+              onTap: (){
+                if(widget.taskType == TaskType.progress){
+                  return;
+                }else{
+                  _updateTaskStatus('Progress');
+                }
+
+              },
+            ),
+            ListTile(
+              title: Text('Completed'),
+              trailing:_getTaskStatusTrailling(TaskType.completed) ,
+              onTap: (){
+                if(widget.taskType == TaskType.completed){
+                  return;
+                }else{
+                  _updateTaskStatus('Completed');
+                }
+
+              },
+            ),
+            ListTile(
+              title: Text('Cancelled'),
+              trailing:_getTaskStatusTrailling(TaskType.cancelled) ,
+              onTap: (){
+                if(widget.taskType == TaskType.cancelled){
+                  return;
+                }else{
+                  _updateTaskStatus('Cancelled');
+                }
+
+              },
+            ),
+
+          ],
+        ),
+      );
+    });
+  }
+
+  Widget? _getTaskStatusTrailling(TaskType type) {
+    return widget.taskType == type ? Icon(Icons.check) : null;
+  }
+
+
+
+  Future<void> _updateTaskStatus(String status)async{
+
+    Navigator.pop(context);
+    _updateTaskStatsuInProgress = true;
+    if(mounted)
+      {
+        setState(() {});
+      }
+    NetworkResponse response = await NetworkCaller.getRequest(
+        url: Urls.updateTaskStatusUrl(widget.taskModel.id, status));
+   _updateTaskStatsuInProgress = false;
+    if(mounted){
+      setState(() {});
+    }
+    if(response.isSuccess){
+      widget.onStatusUpdate();
+    }else{
+      if(mounted)
+        {
+          Show_SnacBarMessage(context, response.errormessage!);
+        }
+    }
+  }
 
 }

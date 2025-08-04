@@ -38,7 +38,9 @@ class _Complete_TaskListScreenState extends State<Complete_TaskListScreen> {
             itemBuilder: (contex,index){
               return Task_Card(
                 taskModel: _CompletedTaskList[index],
-                taskType: TaskType.completed,
+                taskType: TaskType.completed, onStatusUpdate: () {
+                  
+              },
 
               );
             }),
