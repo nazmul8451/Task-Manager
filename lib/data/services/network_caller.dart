@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart';
 import 'package:task_management/app.dart';
@@ -72,10 +71,7 @@ class NetworkCaller {
     }
   }
 
-  static Future<NetworkResponse> postRequest(
-      {required String url,
-      Map<String, String>? body,
-      bool isFromLogin = false}) async {
+  static Future<NetworkResponse> postRequest({required String url, Map<String, String>? body,bool isFromLogin = false}) async {
     try {
       Uri uri = Uri.parse(url);
       final Map<String, String> headers = {

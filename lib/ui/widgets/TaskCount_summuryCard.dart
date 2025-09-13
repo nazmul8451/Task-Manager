@@ -11,15 +11,21 @@ class Task_count_summuryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 5),
+      height: 100,
+      width: 100,
+      decoration: BoxDecoration(
+        color: Colors.grey.shade200,
+        borderRadius: BorderRadius.circular(10),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(13),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text('$count',style: Theme.of(context).textTheme.titleLarge,maxLines: 1,),
-            Text('$title'),
+            Text(title),
           ],
         ),
       ),

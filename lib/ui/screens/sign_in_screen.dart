@@ -2,7 +2,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:task_management/data/models/users_model.dart';
-import 'package:task_management/data/service/network_caller.dart';
+import 'package:task_management/data/services/network_caller.dart';
 import 'package:task_management/data/urls.dart';
 import 'package:task_management/ui/controller/auth_controller.dart';
 import 'package:task_management/ui/screens/forgot_password_email_screen.dart';
@@ -77,6 +77,8 @@ class _SignInScreenState extends State<SignInScreen> {
                 const SizedBox(
                   height: 16,
                 ),
+
+
                 Visibility(
                   visible: _signInProgress == false,
                   replacement: CenterCirculerprogressbar(),
@@ -84,6 +86,8 @@ class _SignInScreenState extends State<SignInScreen> {
                       onPressed: onTapSignIn_button,
                       child: Icon(Icons.arrow_circle_right_outlined)),
                 ),
+
+
                 const SizedBox(
                   height: 40,
                 ),
@@ -144,11 +148,13 @@ class _SignInScreenState extends State<SignInScreen> {
       "password": passwordTEController.text,
     };
     NetworkResponse response = await NetworkCaller.postRequest(
-      url: Urls.LogInUrl,
+      url: Urls.logInUrl,
       body: requestBody,
-      isFromLogin: true
+      isFromLogin: true,
     );
+
     if (response.isSuccess && response.body?['data'] != null) {
+
       UserModel userModel = UserModel.fromJson(response.body!['data']);
       String token = response.body!['token'];
 
@@ -158,7 +164,9 @@ class _SignInScreenState extends State<SignInScreen> {
           context, MainNavBarScreen.name, (predicate) => false);
     } else {
       _signInProgress = false;
-      setState(() {});
+      if(mounted) {
+        setState(() {});
+      }
       Show_SnacBarMessage(context, response.errormessage!);
     }
   }

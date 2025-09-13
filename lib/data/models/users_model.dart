@@ -19,6 +19,7 @@ class UserModel {
     this.photo,
   });
 
+// -- JSON-> Dart Model Convert
   UserModel.fromJson(Map<String, dynamic> jsonData) {
     id = jsonData['_id']?.toString() ?? '';
     email = jsonData['email']?.toString() ?? '';
@@ -28,6 +29,7 @@ class UserModel {
     photo = jsonData['photo']?.toString();
   }
 
+  ///--Dart MODEL-> JSON Convert
   Map<String, dynamic> toJson() {
     return {
       '_id': id,

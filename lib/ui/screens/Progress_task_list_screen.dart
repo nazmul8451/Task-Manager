@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:task_management/ui/widgets/center_circulerProgressbar.dart';
 
 import '../../data/models/task_model.dart';
-import '../../data/service/network_caller.dart';
+import '../../data/services/network_caller.dart';
 import '../../data/urls.dart';
 import '../widgets/Task_Card.dart';
 import '../widgets/snacbar_messanger.dart';
@@ -30,7 +30,7 @@ class _ProgressTaskListScreenState extends State<ProgressTaskListScreen> {
   Widget build(BuildContext context) {
     return Padding(padding:EdgeInsets.symmetric(horizontal: 8),
     child: Visibility(
-      visible: _getProgressTaskInProgress == true,
+      visible: _getProgressTaskInProgress == false,
       replacement: CenterCirculerprogressbar(),
       child: ListView.builder(
           itemCount: _progressTaskList.length,
@@ -65,8 +65,10 @@ class _ProgressTaskListScreenState extends State<ProgressTaskListScreen> {
     }else{
       Show_SnacBarMessage(context, response.errormessage!);
     }
-    _getProgressTaskInProgress =false;
-    setState(() {});
+    if(mounted) {
+      _getProgressTaskInProgress = false;
+      setState(() {});
+    }
   }
 
 }

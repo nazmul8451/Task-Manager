@@ -68,7 +68,7 @@ class TaskManager extends StatelessWidget {
         ),
         useInheritedMediaQuery: true,
         debugShowCheckedModeBanner: false,
-        initialRoute: '/',
+        initialRoute: SplashScreen.name,
         routes: {
           SplashScreen.name : (context) => SplashScreen(),
           SignInScreen.name : (context) => SignInScreen(),
