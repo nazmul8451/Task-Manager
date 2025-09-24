@@ -29,7 +29,8 @@ class _Complete_TaskListScreenState extends State<Complete_TaskListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(padding:EdgeInsets.symmetric(horizontal: 8),
+    return Padding(
+      padding:EdgeInsets.symmetric(horizontal: 8),
       child: Visibility(
         visible: _getCompletedTaskInProgress == false,
         replacement: CenterCirculerprogressbar(),
@@ -40,9 +41,7 @@ class _Complete_TaskListScreenState extends State<Complete_TaskListScreen> {
                 taskModel: _CompletedTaskList[index],
                 taskType: TaskType.completed, onStatusUpdate: () {
                   _getCompletedTaskList();
-                  // _CompletedTaskList();
               },
-
               );
             }),
       ),
@@ -52,7 +51,7 @@ class _Complete_TaskListScreenState extends State<Complete_TaskListScreen> {
     _getCompletedTaskInProgress = true;
     setState(() {});
     NetworkResponse response =
-    await NetworkCaller.getRequest(url: Urls.getNewTasksUrl);
+    await NetworkCaller.getRequest(url: Urls.getCompletedTasksUrl);
 
     if(response.isSuccess){
       //Models
@@ -67,7 +66,7 @@ class _Complete_TaskListScreenState extends State<Complete_TaskListScreen> {
     }
     if(mounted)
       {
-        _getCompletedTaskInProgress =false;
+        _getCompletedTaskInProgress = false;
         setState(() {});
       }
   }

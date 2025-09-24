@@ -51,9 +51,6 @@ class _ProgressTaskListScreenState extends State<ProgressTaskListScreen> {
     setState(() {});
     NetworkResponse response =
     await NetworkCaller.getRequest(url: Urls.getProgressTasksUrl);
-
-
-
     if(response.isSuccess){
       //Models
       List<TaskModel> list = [];

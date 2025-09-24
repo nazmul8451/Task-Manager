@@ -5,6 +5,8 @@ class Urls {
   static const String creatNewTasksUrl = "$baseUrl/createTask";
   static const String getNewTasksUrl = "$baseUrl/listTaskByStatus/New";
   static const String getProgressTasksUrl = "$baseUrl/listTaskByStatus/Progress";
+  static const String getCancelledTasksUrl = "$baseUrl/listTaskByStatus/Cancelled";
+  static const String getCompletedTasksUrl = "$baseUrl/listTaskByStatus/Completed";
   static const String getTaskStatusCountUrl = "$baseUrl/taskStatusCount";
   static String updateTaskStatusUrl(String taskId, String status) =>
       "$baseUrl/updateTaskStatus/$taskId/$status";

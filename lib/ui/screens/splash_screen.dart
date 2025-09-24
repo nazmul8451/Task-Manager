@@ -18,8 +18,9 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _moveToNextScreen();
-  }
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      _moveToNextScreen();
+    });}
 
   Future<void> _moveToNextScreen() async {
     print("Starting splash screen delay...");

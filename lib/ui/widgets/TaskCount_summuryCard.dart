@@ -24,7 +24,8 @@ class Task_count_summuryCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('$count',style: Theme.of(context).textTheme.titleLarge,maxLines: 1,),
+            Text('$count',
+              style: Theme.of(context).textTheme.titleLarge,maxLines: 1,),
             Text(title),
           ],
         ),

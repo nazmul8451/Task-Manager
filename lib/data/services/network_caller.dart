@@ -45,7 +45,7 @@ class NetworkCaller {
           body: decodedJson,
         );
       }
-      else if(response.statusCode == 200){
+      else if(response.statusCode == 401){
         _onUnAuthorize();
         final decodedJson = jsonDecode(response.body);
         return NetworkResponse(
@@ -94,7 +94,7 @@ class NetworkCaller {
           body: decodedJson,
         );
       }
-      else if(response.statusCode == 200){
+      else if(response.statusCode == 401){
         if(isFromLogin == false) {
           _onUnAuthorize();
         }

@@ -5,13 +5,9 @@ import 'package:task_management/app.dart';
 
 void main() {
   runApp(
-    DevicePreview(
-      enabled: !kReleaseMode,
-      builder: (context) => const MaterialApp(
-        useInheritedMediaQuery: true,
-        debugShowCheckedModeBanner: false,
-        home:TaskManager(),
-      ), // runApp এর ভিতরে DevicePreview
-    ),
+        DevicePreview(
+          enabled: !kReleaseMode,
+          builder: (context) => const TaskManager(), // এখানে TaskManager এর ভেতরেই GetMaterialApp আছে
+        ),
   );
 }

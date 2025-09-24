@@ -31,9 +31,11 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_){
+      //এটার মানে হলও তুমি আগে স্বাভাবিক ভাবে স্ক্রিন টাকে একবার বিল্ড করো ।এরপরে তুইমি এই ফাংশন গুলো কে কল দাও
       _getNewTaskList();
       _getNewTaskStatusList();
     });
+
   }
 
   @override
@@ -113,12 +115,13 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
     _getNewTaskInProgress =false;
     setState(() {});
   }
+
+
   Future<void> _getNewTaskStatusList() async {
     _getTaskStatusCountInProgress = true;
     setState(() {});
     NetworkResponse response =
     await NetworkCaller.getRequest(url: Urls.getTaskStatusCountUrl);
-
     if(response.isSuccess){
       //Models
       List<TaskStatusCountModel> list = [];

@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:task_management/ui/controller/auth_controller.dart';
 import 'package:task_management/ui/screens/Add_New_Task.dart';
 import 'package:task_management/ui/screens/Update_profile_screen.dart';
@@ -21,7 +23,7 @@ class TaskManager extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
         navigatorKey:navigator ,
         theme: ThemeData(
             colorSchemeSeed: Colors.green,
@@ -69,17 +71,17 @@ class TaskManager extends StatelessWidget {
         useInheritedMediaQuery: true,
         debugShowCheckedModeBanner: false,
         initialRoute: SplashScreen.name,
-        routes: {
-          SplashScreen.name : (context) => SplashScreen(),
-          SignInScreen.name : (context) => SignInScreen(),
-          SignUpScreen.name : (context) => SignUpScreen(),
-          Forgot_passwordEmail_screen.name: (context) => Forgot_passwordEmail_screen(),
-          ChangePasswordScreen.name : (context) => ChangePasswordScreen(),
-          Pin_Verification_Screen.name : (context) => Pin_Verification_Screen(),
-          MainNavBarScreen.name: (context) => MainNavBarScreen(),
-          AddNewTask.name : (context) => AddNewTask(),
-          UpdateProfileScreen.name : (context) => UpdateProfileScreen(),
-        }
+      getPages: [
+        GetPage(name: SplashScreen.name, page: () => SplashScreen()),
+        GetPage(name: SignInScreen.name, page: () => SignInScreen()),
+        GetPage(name: SignUpScreen.name, page: () => SignUpScreen()),
+        GetPage(name: Forgot_passwordEmail_screen.name, page: () => Forgot_passwordEmail_screen()),
+        GetPage(name: ChangePasswordScreen.name, page: () => ChangePasswordScreen()),
+        GetPage(name: Pin_Verification_Screen.name, page: () => Pin_Verification_Screen()),
+        GetPage(name: MainNavBarScreen.name, page: () => MainNavBarScreen()),
+        GetPage(name: AddNewTask.name, page: () => AddNewTask()),
+        GetPage(name: UpdateProfileScreen.name, page: () => UpdateProfileScreen()),
+      ],
     );
   }
 }

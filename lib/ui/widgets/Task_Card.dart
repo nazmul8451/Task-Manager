@@ -109,7 +109,9 @@ class _Task_CardState extends State<Task_Card> {
 
   void _showEditTaskStatusDialog()
   {
-    showDialog(context: context, builder: (ctx){
+    showDialog(
+        context: context,
+        builder: (dialogContext){
       return AlertDialog(
         title:Text('Change Status'),
         content: Column(
@@ -122,9 +124,8 @@ class _Task_CardState extends State<Task_Card> {
                 if(widget.taskType == TaskType.tNew){
                   return;
                 }else{
-                _updateTaskStatus('New');
+                _updateTaskStatus('New',dialogContext);
                 }
-
               },
             ),
             ListTile(
@@ -134,9 +135,8 @@ class _Task_CardState extends State<Task_Card> {
                 if(widget.taskType == TaskType.progress){
                   return;
                 }else{
-                  _updateTaskStatus('Progress');
+                  _updateTaskStatus('Progress',dialogContext);
                 }
-
               },
             ),
             ListTile(
@@ -146,7 +146,7 @@ class _Task_CardState extends State<Task_Card> {
                 if(widget.taskType == TaskType.completed){
                   return;
                 }else{
-                  _updateTaskStatus('Completed');
+                  _updateTaskStatus('Completed',dialogContext);
                 }
 
               },
@@ -158,7 +158,7 @@ class _Task_CardState extends State<Task_Card> {
                 if(widget.taskType == TaskType.cancelled){
                   return;
                 }else{
-                  _updateTaskStatus('Cancelled');
+                  _updateTaskStatus('Cancelled',dialogContext);
                 }
 
               },
@@ -170,33 +170,38 @@ class _Task_CardState extends State<Task_Card> {
     });
   }
 
+
   Widget? _getTaskStatusTrailling(TaskType type) {
     return widget.taskType == type ? Icon(Icons.check) : null;
   }
 
-
-
-  Future<void> _updateTaskStatus(String status)async{
-
-    Navigator.pop(context);
+void _onTapTaskStatus(TaskType type){
+    if(type == widget.taskType){
+      return;
+    }else{
+      _updateTaskStatus(type.name,context);
+    }
+}
+  Future<void> _updateTaskStatus(String status, BuildContext dialogContext)async{
+    // Navigator.pop(context);
     _updateTaskStatsuInProgress = true;
-    if(mounted)
-      {
-        setState(() {});
-      }
-    NetworkResponse response = await NetworkCaller.getRequest(
-        url: Urls.updateTaskStatusUrl(widget.taskModel.id, status));
-   _updateTaskStatsuInProgress = false;
     if(mounted){
       setState(() {});
     }
+    NetworkResponse response = await NetworkCaller.getRequest(
+        url: Urls.updateTaskStatusUrl(widget.taskModel.id, status));
     if(response.isSuccess){
       widget.onStatusUpdate();
+      Navigator.pop(dialogContext);
     }else{
       if(mounted)
         {
           Show_SnacBarMessage(context, response.errormessage!);
         }
+    }
+    _updateTaskStatsuInProgress = false;
+    if(mounted){
+      setState(() {});
     }
   }
 

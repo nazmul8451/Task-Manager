@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:task_management/data/models/users_model.dart';
 import 'package:task_management/ui/controller/auth_controller.dart';
 import 'package:task_management/ui/screens/Update_profile_screen.dart';
 import 'package:task_management/ui/screens/sign_in_screen.dart';
