@@ -33,8 +33,7 @@ class SignInController extends GetxController{
       await AuthController.saveUserData(userModel, token);
       isSucces = true;
       _errorMessage = null;
-      // Navigator.pushNamedAndRemoveUntil(
-      //     context, MainNavBarScreen.name, (predicate) => false);
+
     } else {
       _errorMessage = response.errormessage!;
     }

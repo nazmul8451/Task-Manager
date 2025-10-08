@@ -1,7 +1,9 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:task_management/data/urls.dart';
+import 'package:task_management/ui/controller/sign_up_controller.dart';
 import 'package:task_management/ui/screens/sign_in_screen.dart';
 import 'package:task_management/ui/widgets/center_circulerProgressbar.dart';
 import 'package:task_management/ui/widgets/screen_background.dart';
@@ -26,7 +28,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController lastNameTEController = TextEditingController();
   final TextEditingController mobileTEController = TextEditingController();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  final SignUpController  _signUpController = SignUpController();
   bool _signUpIn_Progress = false;
 
   @override
@@ -166,7 +168,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = onTapSignIn_button,
                                     )
-                                  ])),
+                                  ]
+                              )),
                         ],
                       ),
                     ),
@@ -188,33 +191,46 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Future<void> _signUp() async {
-    _signUpIn_Progress = true;
+    bool isSuccess = await SignUpController().SignUp(
+        emailTEController.text.trim(),
+        firstNamelTEController.text.trim(),
+        lastNameTEController.text.trim(),
+        mobileTEController.text.trim(), passwordTEController.text);
 
-    if (mounted) {
-      setState(() {});
-    }
-    Map<String, String>requestBody = {
-      "email": emailTEController.text.trim(),
-      "firstName": firstNamelTEController.text.trim(),
-      "lastName": lastNameTEController.text.trim(),
-      "mobile": mobileTEController.text.trim(),
-      "password": passwordTEController.text,
-    };
-    //এটুকুই আমার নেটও্যয়ার্ক কল করার কোড ।
-    // কারণ আমি সব অপারেশন NetworkCaller classe
-    // এই করে পেলেছি।এখন শুধু এখানে এপ্লাই করার ফালা।
-    NetworkResponse response =
-    await NetworkCaller.postRequest(
-        url: Urls.registrationUrl, body: requestBody);
-
-    _signUpIn_Progress = false;
-    setState(() {});
-    if (response.isSuccess && response.body?['data'] != null) {
+    if(isSuccess){
       _clearTextField();
       Show_SnacBarMessage(context, 'Registration has been success.plz login');
-    } else {
-      Show_SnacBarMessage(context, response.errormessage!);
+    }else{
+      Show_SnacBarMessage(context, _signUpController.errorMessage!);
     }
+
+    // _signUpIn_Progress = true;
+    //
+    // if (mounted) {
+    //   setState(() {});
+    // }
+    // Map<String, String>requestBody = {
+    //   "email": emailTEController.text.trim(),
+    //   "firstName": firstNamelTEController.text.trim(),
+    //   "lastName": lastNameTEController.text.trim(),
+    //   "mobile": mobileTEController.text.trim(),
+    //   "password": passwordTEController.text,
+    // };
+    // //এটুকুই আমার নেটও্যয়ার্ক কল করার কোড ।
+    // // কারণ আমি সব অপারেশন NetworkCaller classe
+    // // এই করে পেলেছি।এখন শুধু এখানে এপ্লাই করার ফালা।
+    // NetworkResponse response =
+    // await NetworkCaller.postRequest(
+    //     url: Urls.registrationUrl, body: requestBody);
+    //
+    // _signUpIn_Progress = false;
+    // setState(() {});
+    // if (response.isSuccess && response.body?['data'] != null) {
+    //   _clearTextField();
+    //   Show_SnacBarMessage(context, 'Registration has been success.plz login');
+    // } else {
+    //   Show_SnacBarMessage(context, response.errormessage!);
+    // }
   }
 
 

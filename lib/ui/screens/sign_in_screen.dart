@@ -22,7 +22,7 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController emailTEController = TextEditingController();
   final TextEditingController passwordTEController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final SignInController _signInController = SignInController();
+  final _signInController = Get.find<SignInController>();
 
   @override
   Widget build(BuildContext context) {

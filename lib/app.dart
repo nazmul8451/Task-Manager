@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
-import 'package:task_management/ui/controller/auth_controller.dart';
 import 'package:task_management/ui/screens/Add_New_Task.dart';
 import 'package:task_management/ui/screens/Update_profile_screen.dart';
 import 'package:task_management/ui/screens/change_password_screen.dart';
@@ -60,7 +59,7 @@ class TaskManager extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 15),
                   backgroundColor: Colors.green,
                   foregroundColor: Colors.white,
-                )
+                ),
             ),
             textButtonTheme: TextButtonThemeData(
                 style: TextButton.styleFrom(

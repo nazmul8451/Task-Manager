@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:task_management/data/models/task_model.dart';
 import 'package:task_management/data/models/task_status_count.dart';
 import 'package:task_management/data/services/network_caller.dart';
 import 'package:task_management/data/urls.dart';
+import 'package:task_management/ui/controller/new_task_list_Controller.dart';
 import 'package:task_management/ui/screens/Add_New_Task.dart';
 import 'package:task_management/ui/widgets/center_circulerProgressbar.dart';
 import 'package:task_management/ui/widgets/snacbar_messanger.dart';
@@ -95,6 +98,15 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
   }
 
   Future<void> _getNewTaskList() async {
+
+    // bool isSuccess = await NewTaskListController().getNewTaskList();
+    // if(isSuccess)
+    //   {
+    //     Get.snackbar('Success', 'Task Successfully added');
+    //   }else{
+    //   Get.snackbar('Error', NewTaskListController().errorMessage!);
+    // }
+
     _getNewTaskInProgress = true;
     setState(() {});
     NetworkResponse response =
